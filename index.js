@@ -1,4 +1,5 @@
-const express = require("express"); //FunctionObject
+const express = require("express"); //FunctionObject //express module
+const path = require("path"); //pathObject //path module
 const app = express(); //AppObject
 
 //npm i ejs
@@ -6,7 +7,10 @@ const app = express(); //AppObject
 //("key","value") //sets key to value
 app.set("view engine", "ejs"); //auto require("ejs")
 //when view engine is used express assumes our views/templates
-//exist in a (default)views directory //can change with app.set('views', process.cwd() + '/directoryName')
+//exist in a (default)views directory
+//can change directoryName with app.set('views', process.cwd() + '/directoryName') //nodejs runtime execution directory - issue
+//we can also change it to use currentDirectoryPath of index.html insted- due to not finding views directory when executing from outside this directory eg-cd..
+app.set("views", path.join(__dirname, "/views")); //object.method(currentDirectoryPath,"/directoryName") //combines strings
 
 //adddress - localhost:3000
 //execute callback

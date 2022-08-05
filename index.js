@@ -13,12 +13,14 @@ app.set("view engine", "ejs"); //auto require("ejs")
 app.set("views", path.join(__dirname, "/views")); //object.method(currentDirectoryPath,"/directoryName") //combines strings
 
 //adddress - localhost:3000
+//app is listening for (HTTPstructured) requests
 //execute callback
+//localhost:3000 shows Cannot GET/ if we're not responding with any content
 app.listen(3000, () => {
   console.log("Listening on port 3000");
 });
 
-//httpMethod-get,path-"/"(root)
+//httpMethod-get,path-"/"(root) - (direct match/exact path)
 //execute callback when http structure request arrives
 //convert http request/response to jsObject
 app.get("/", (req, res) => {
@@ -30,9 +32,20 @@ app.get("/", (req, res) => {
   //render() executes the js in ejs file - converts ejs file into pure html
 });
 
+//httpMethod-get,path-"/rand" - (direct match/exact path)
+//execute callback when http structure request arrives
+//convert http request/response to jsObject
+app.get("/rand", (req, res) => {
+  console.log("HTTP structured request received");
+  const num = Math.floor(Math.random() * 10) + 1;
+  res.render("random", { randNo: num }); //render(ejsFile,variablesObject) passes the key in variablesObject argument as variables to ejs file
+  //variablesObject- if key and value are same name ie {num:num} can be shortened to {num}
+});
+
 //Templating-
 //define single preset pattern for all webpages
 //that we can dynamically modify by embedding info+logic/
 //EJS(EmbeddedJavaScript) - templating language
 //other templating languages - handlebar //jade //pug //nunjucks
 //we add javascript into html with EJS
+//try not to write logic in ejs file - write logic in js file and pass in the variables to ejs

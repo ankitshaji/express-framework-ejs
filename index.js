@@ -38,6 +38,7 @@ app.get("/rand", (req, res) => {
   const num = Math.floor(Math.random() * 10) + 1;
   res.render("random", { randNo: num }); //render(ejsFile,variablesObject) passes the key in variablesObject argument as variables to ejs file
   //variablesObject- if key and value are same name ie {num:num} can be shortened to {num}
+  //resObjt convert and send httpStructured response //Content-Type:text/html
 });
 
 //httpMethod-get,path-"/r/:subreddit" - (pattern match)
@@ -45,7 +46,14 @@ app.get("/rand", (req, res) => {
 app.get("/r/:subreddit", (req, res) => {
   //key into variables //object destructure
   const { subreddit } = req.params; //object
-  res.render("subreddit", { subreddit }); //send variable to ejs
+  res.render("subreddit", { subreddit }); //send variable to ejs //resObjt convert and send httpStructured response //Content-Type:text/html
+});
+
+//httpMethod-get,path-"/cats" - (direct match/exact path)
+app.get("/cats", (req, res) => {
+  //pretend database
+  const cats = ["Blue", "Rocket", "catName3", "catName4", "catName5"];
+  res.render("cats", { cats }); //send variable to ejs //resObjt convert and send httpStructured response //Content-Type:text/html
 });
 
 //Templating-

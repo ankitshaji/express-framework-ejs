@@ -13,6 +13,13 @@ app.set("view engine", "ejs"); //auto require("ejs")
 //we can also change it to use currentDirectoryPath of index.html insted- due to not finding views directory when executing from outside this directory eg-cd..
 app.set("views", path.join(__dirname, "/views")); //object.method(currentDirectoryPath,"/directoryName") //combines strings
 
+//serving static files - found in directoryName - making it available in ejs files + localhost:3000/style.css
+//unlike default app.use(callback) - no callback argument to execute when any httpMethod/any httpStructured request
+//comes in to localhost:3000 or any /resource path ,instead execute the argument
+//appObject.method(expressObject.method("assetsDirectoryName"))
+//we can also change it to use currentDirectoryPath of index.html instead- due to not finding public directory when executing from outside this directory eg-cd..
+app.use(express.static(path.join(__dirname, "public")));
+
 //adddress - localhost:3000
 //app is listening for (HTTPstructured) requests
 //execute callback
@@ -77,3 +84,7 @@ app.get("/cats", (req, res) => {
 //json/jsObject
 //write keys in an object and json in lowercase
 //write file names in lowercase
+//serving static files express-framework -
+//.css,.js and otherfile(image) - instead of just .html http strucuted response
+//using middleware function - runs between httpStructuredRequest coming in and httpStructuredResponse going out
+//express.static("assetsDirectoryName") Object.method(argument) //uses nodejs runtime directory//fix above sets to current directory of index.html

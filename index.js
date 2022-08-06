@@ -1,5 +1,6 @@
 const express = require("express"); //FunctionObject //express module
 const path = require("path"); //pathObject //path module
+const redditData = require("./data.json"); //jsObject //self created module/file needs "./"
 const app = express(); //AppObject
 
 //npm i ejs
@@ -45,8 +46,18 @@ app.get("/rand", (req, res) => {
 //:subreddit -pathVariable
 app.get("/r/:subreddit", (req, res) => {
   //key into variables //object destructure
-  const { subreddit } = req.params; //object
-  res.render("subreddit", { subreddit }); //send variable to ejs //resObjt convert and send httpStructured response //Content-Type:text/html
+  const { subreddit } = req.params; //req.params an object
+  const data = redditData[subreddit]; //Object[key] is another object with properties
+  // console.log(data); //object with properties
+  //undefine is falsy
+  if (data) {
+    res.render("subreddit", { ...data }); //send variables to ejs //resObjt convert and send httpStructured response //Content-Type:text/html
+    //object-literal-spread - ...data is taking out each key:value pair in object and passing it in individually to new object
+    //{...data} is same as {key1:"value1",key2:"value2",key3:value3}
+    //each key is a variable passed into ejs file
+  } else {
+    res.render("notfound", { subreddit }); //send variables to ejs //resObjt convert and send httpStructured response //Content-Type:text/html
+  }
 });
 
 //httpMethod-get,path-"/cats" - (direct match/exact path)
@@ -63,3 +74,6 @@ app.get("/cats", (req, res) => {
 //other templating languages - handlebar //jade //pug //nunjucks
 //we add javascript into html with EJS
 //try not to write logic in ejs file - write logic in js file and pass in the variables to ejs
+//json/jsObject
+//write keys in an object and json in lowercase
+//write file names in lowercase
